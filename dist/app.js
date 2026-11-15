@@ -54,7 +54,19 @@ if(cards.length){
   setInterval(()=>{if(!document.hidden)updateSchedule()},1000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateSchedule()});
 }
-const cannon=document.querySelector('[data-cannon]');if(cannon)import('./cannon.js').then(({initCannon})=>initCannon(cannon)).catch(()=>{cannon.innerHTML='<p class="js-fallback">The simulation could not load. Please refresh to try again. The real fountain’s schedule is above.</p>'});
+const cannon=document.querySelector('[data-cannon]');if(cannon)import('./cannon.js').then(({initCannon})=>initCannon(cannon)).catch(()=>{cannon.innerHTML='<p class="js-fallback">The cannon game could not load. Refresh to try again.</p>'});
 const explorers=[...document.querySelectorAll('[data-hotspots]')];
 if(explorers.length)import('./hotspots.js').then(({initHotspots})=>explorers.forEach(initHotspots));
 initReversal();
+
+async function revealLinkedDetails(){
+  const target=document.getElementById(location.hash.slice(1));
+  if(target?.tagName!=='DETAILS')return;
+  target.open=true;
+  await document.fonts.ready;
+  requestAnimationFrame(()=>{
+    if(location.hash.slice(1)===target.id)target.scrollIntoView({block:'start',behavior:'instant'});
+  });
+}
+revealLinkedDetails();
+window.addEventListener('hashchange',revealLinkedDetails);

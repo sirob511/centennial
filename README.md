@@ -40,3 +40,7 @@ The maps and cannon are original schematic vector illustrations. The cannon star
 ## Hosting
 
 `.openai/hosting.json` declares the private Sites project and static output. Canonical URLs and share metadata use the Sites origin. CentennialFountain.com is the site identity; connecting that custom domain requires its owner’s DNS configuration and has not been performed.
+
+## Interaction-first layout
+
+The photo explorers and river switch lead their pages. Secondary history, access notes and source material use native disclosures; incoming `#sources`, `#directions` and `#static-maps` links open their corresponding disclosure. The home page links to the three experiences with visual cards. Keep required photo credits beside images when editing these layouts.
