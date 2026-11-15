@@ -1,0 +1,82 @@
+{
+  "panorama": {
+    "title": "Centennial Fountain at River Esplanade Park Chicago.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Centennial_Fountain_at_River_Esplanade_Park_Chicago.jpg",
+    "author": "Dicklyon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Panoramic view of Centennial Fountain at River Esplanade Park, Chicago",
+    "lat": "41.888769",
+    "lon": "-87.617722"
+  },
+  "detail": {
+    "title": "Centennial Fountain closeup.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Centennial_Fountain_closeup.jpg",
+    "author": "Dicklyon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Centennial Fountain, River Esplanade Park, Chicago",
+    "lat": "41.888842",
+    "lon": "-87.617747"
+  },
+  "hero": {
+    "title": "Centennial Fountain water arc.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Centennial_Fountain_water_arc.jpg",
+    "author": "Dicklyon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "The water arc at Centennial Fountain, River Esplanade Park, Chicago",
+    "lat": "41.888936",
+    "lon": "-87.618578"
+  },
+  "front": {
+    "title": "Centennial Fountain1 070813.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Centennial_Fountain1_070813.jpg",
+    "author": "User:JeremyA",
+    "license": "CC BY-SA 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+    "description": "Centennial Fountain on the Chicago River, Chicago.",
+    "lat": null,
+    "lon": null
+  },
+  "cascade": {
+    "title": "Centennial Fountain2 070813.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Centennial_Fountain2_070813.jpg",
+    "author": "User:JeremyA",
+    "license": "CC BY-SA 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+    "description": "Centennial Fountain on the Chicago River, Chicago.",
+    "lat": null,
+    "lon": null
+  },
+  "south": {
+    "title": "Chicago - panoramio (94).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicago_-_panoramio_(94).jpg",
+    "author": "El\u00edas Arteaga",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Chicago Riverwalk",
+    "lat": "41.888094",
+    "lon": "-87.616825"
+  },
+  "river": {
+    "title": "Chicago River Works (13955782520).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicago_River_Works_(13955782520).jpg",
+    "author": "edward stojakovic from Portland, OR, United States",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "When 'ya gotta go, ya gotta go",
+    "lat": null,
+    "lon": null
+  },
+  "bridge": {
+    "title": "Lake Shore Drive Bridge (7170820655).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Lake_Shore_Drive_Bridge_(7170820655).jpg",
+    "author": "Marlin Keesler from Streamwood, IL",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Viewing the main stem of the Chicago River from lower level west side of bridge.",
+    "lat": null,
+    "lon": null
+  }
+}

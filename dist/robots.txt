@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://centennial-fountain-guide.amusingdelta5.chatgpt.site/sitemap.xml
