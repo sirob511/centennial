@@ -55,8 +55,6 @@ if(cards.length){
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateSchedule()});
 }
 const cannon=document.querySelector('[data-cannon]');if(cannon)import('./cannon.js').then(({initCannon})=>initCannon(cannon)).catch(()=>{cannon.innerHTML='<p class="js-fallback">The simulation could not load. Please refresh to try again. The real fountain’s schedule is above.</p>'});
-const explorer=document.querySelector('[data-hotspots]');
-if(explorer)import('./hotspots.js').then(({initHotspots})=>initHotspots(explorer));
+const explorers=[...document.querySelectorAll('[data-hotspots]')];
+if(explorers.length)import('./hotspots.js').then(({initHotspots})=>explorers.forEach(initHotspots));
 initReversal();
-
-const visitMap=document.querySelector('.visit-map-wrap');if(visitMap&&visitMap.scrollWidth>visitMap.clientWidth){visitMap.scrollLeft=visitMap.scrollWidth*.62-visitMap.clientWidth*.5;visitMap.setAttribute('tabindex','0');visitMap.setAttribute('aria-label','Viewpoint map. Scroll sideways to explore.')}

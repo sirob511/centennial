@@ -27,6 +27,8 @@ exceptions: {
 
 Original photo records, camera coordinates where available, source links and reuse licenses are in `research-assets.json`. Resized/cropped photographs retain their original Creative Commons licenses. Captions link to original files and licenses. Fountain hotspots are percentage-positioned against the uncropped front photograph; their positions remain fixed relative to its features as it scales.
 
+Explore and Visit share anchored detail popovers in `dist/hotspots.js`. Opening unique markers fills a three-part discovery counter for the current page visit. Pulsing markers can be paused and respect reduced-motion preferences. The Visit map uses desktop and mobile SVG views of the same schematic; button coordinates are tied to each viewBox. The full fountain photograph keeps its original aspect ratio so its markers stay on the correct details.
+
 Primary content sources are linked in the site. The operator schedule takes precedence over conflicting older listings. The district was founded in 1889; the reversal occurred in 1900; the fountain dedication was in 1989. Viewpoint access is documented using park, Riverwalk and bridge sources, and original photographs; it is not a live access guarantee.
 
 The maps and cannon are original schematic vector illustrations. The cannon starts off, illuminates two warning lights for 1.5 seconds, builds for 0.9 seconds, and tapers over 1.1 seconds. The optional boat challenge has a timed burst; reduced motion uses a stationary boat with an explicit advance control. Motion can also be paused manually.

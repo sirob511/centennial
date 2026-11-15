@@ -1,8 +1,19 @@
 export function initHotspots(explorer) {
   const popup = explorer.querySelector('#feature-panel');
-  const buttons = [...explorer.querySelectorAll('[data-feature]')];
-  const markers = [...explorer.querySelectorAll('.hotspot')];
+  const stage = explorer.querySelector('.hotspot-stage');
+  if (!popup || !stage) return;
+  const buttons = [...explorer.querySelectorAll('.hotspot[data-feature], .feature-buttons [data-feature]')];
+  const markers = [...explorer.querySelectorAll('.hotspot[data-feature]')];
   const panels = [...popup.querySelectorAll('[data-feature-panel]')];
+  const discovered = new Set();
+  const featureIds = new Set(panels.map(panel => panel.dataset.featurePanel));
+  const discoveryCount = explorer.querySelector('[data-discovery-count]');
+  const discoveryLabel = explorer.querySelector('[data-discovery-label]');
+  const discoveryStatus = explorer.querySelector('[data-discovery-status]');
+  const discoveryPips = [...explorer.querySelectorAll('[data-discovery-pip]')];
+  const discoveryDescription = discoveryLabel?.textContent.trim() || 'details discovered';
+  const discoveryComplete = explorer.dataset.discoveryComplete || 'All details discovered!';
+  const motionButton = explorer.querySelector('[data-marker-motion]');
   const nativePopover = typeof popup.showPopover === 'function';
   let trigger = null;
   let anchor = null;
@@ -17,9 +28,15 @@ export function initHotspots(explorer) {
 
   const header = document.createElement('div');
   header.className = 'feature-popover-header';
-  header.innerHTML = '<span>EXPLORE THE FOUNTAIN</span><button type="button" class="feature-close" aria-label="Close fountain detail">×</button>';
+  const title = document.createElement('span');
+  title.textContent = explorer.dataset.explorerTitle || 'Explore the fountain';
+  const closeButton = document.createElement('button');
+  closeButton.type = 'button';
+  closeButton.className = 'feature-close';
+  closeButton.setAttribute('aria-label', `Close ${explorer.dataset.detailLabel || 'fountain detail'}`);
+  closeButton.textContent = '×';
+  header.append(title, closeButton);
   popup.prepend(header);
-  const closeButton = header.querySelector('button');
 
   panels.forEach(panel => {
     panel.querySelector('h2').id = `feature-title-${panel.dataset.featurePanel}`;
@@ -33,6 +50,36 @@ export function initHotspots(explorer) {
   const isOpen = () => nativePopover ? popup.matches(':popover-open') : !popup.hidden;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+
+  function discover(id) {
+    if (discovered.has(id) || !featureIds.has(id)) return;
+    discovered.add(id);
+    buttons.forEach(button => {
+      if (button.dataset.feature === id) button.dataset.discovered = 'true';
+    });
+    discoveryPips.forEach(pip => {
+      if (pip.dataset.discoveryPip === id) pip.dataset.discovered = 'true';
+    });
+    if (discoveryCount) discoveryCount.textContent = `${discovered.size} / ${featureIds.size}`;
+    const complete = discovered.size === featureIds.size;
+    if (discoveryLabel) discoveryLabel.textContent = complete ? discoveryComplete : discoveryDescription;
+    if (discoveryStatus) {
+      discoveryStatus.textContent = complete
+        ? discoveryComplete
+        : `${discovered.size} of ${featureIds.size} ${discoveryDescription}.`;
+    }
+  }
+
+  if (motionButton) {
+    explorer.dataset.motionPaused = 'false';
+    motionButton.setAttribute('aria-pressed', 'false');
+    motionButton.addEventListener('click', () => {
+      const paused = explorer.dataset.motionPaused !== 'true';
+      explorer.dataset.motionPaused = String(paused);
+      motionButton.setAttribute('aria-pressed', String(paused));
+      motionButton.textContent = paused ? 'Resume pulses' : 'Pause pulses';
+    });
+  }
 
   function syncButtons() {
     buttons.forEach(button => {
@@ -114,8 +161,12 @@ export function initHotspots(explorer) {
   }
 
   function open(button) {
-    trigger = button;
     anchor = markers.find(marker => marker.dataset.feature === button.dataset.feature);
+    if (!anchor || !featureIds.has(button.dataset.feature)) return;
+    trigger = button;
+    // Keyboard focus on a lower detail button can start a smooth page scroll.
+    // Stop it before positioning, so that it cannot carry the marker offscreen.
+    window.scrollTo({ left: window.scrollX, top: window.scrollY, behavior: 'instant' });
     const rect = anchor.getBoundingClientRect();
     if (rect.top < 32 || rect.bottom > innerHeight - 32) {
       anchor.scrollIntoView({ block: 'center', behavior: 'instant' });
@@ -129,6 +180,7 @@ export function initHotspots(explorer) {
     }
     position();
     syncButtons();
+    discover(button.dataset.feature);
     closeButton.focus({ preventScroll: true });
   }
 
@@ -149,5 +201,6 @@ export function initHotspots(explorer) {
   window.addEventListener('resize', queuePosition);
   window.visualViewport?.addEventListener('resize', queuePosition);
   window.visualViewport?.addEventListener('scroll', queuePosition);
-  new ResizeObserver(() => queuePosition()).observe(explorer.querySelector('.hotspot-stage'));
+  new ResizeObserver(() => queuePosition()).observe(stage);
+  explorer.dataset.enhanced = 'true';
 }
