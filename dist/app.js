@@ -1,9 +1,59 @@
 import {getSchedule} from './schedule.js';
 import {initReversal} from './reversal.js';
 const cards=[...document.querySelectorAll('.schedule-card')];
-let previousAnnouncement='';let scheduleResult;let scheduleComputed=0;
-function updateSchedule(){const now=new Date();if(!scheduleResult||now-scheduleComputed>15000||+scheduleResult.targetAt<=+now){scheduleResult=getSchedule(now);scheduleComputed=+now}const r=scheduleResult;const remaining=r.targetAt?Math.max(0,Math.ceil((r.targetAt-now)/1000)):null;for(const c of cards){c.querySelector('[data-state]').textContent=r.state==='off-season'?'Off-season · back in May':r.state==='closed'?'Scheduled closure':r.state==='spraying'?'Within a scheduled window':'America/Chicago';c.querySelector('[data-schedule-label]').textContent=r.state==='spraying'?'Scheduled to spray now':'Next scheduled spray';const clock=c.querySelector('[data-countdown]');if(r.state==='off-season'){clock.textContent=r.dateLabel;clock.setAttribute('aria-label',`Next scheduled spray ${r.nextLabel}`)}else if(r.state==='closed'){clock.textContent='Temporarily closed';clock.setAttribute('aria-label',r.reason)}else if(remaining!==null){const h=Math.floor(remaining/3600),m=Math.floor(remaining%3600/60),s=remaining%60;clock.textContent=`${String(h).padStart(2,'0')} : ${String(m).padStart(2,'0')} : ${String(s).padStart(2,'0')}`;clock.setAttribute('aria-label',`${h} hours ${m} minutes ${s} seconds ${r.state==='spraying'?'remaining in scheduled window':'until next scheduled spray'}`)}else clock.textContent='Check with MWRD';c.querySelector('[data-next-time]').textContent=r.state==='spraying'?'Remaining in this five-minute window':r.state==='closed'?`${r.reason} Next: ${r.nextLabel}`:r.state==='off-season'?`${r.timeLabel} · season resumes` :r.nextLabel;const a=`${r.state}. ${r.state==='spraying'?'Scheduled to spray now.':`Next scheduled spray: ${r.nextLabel}.`}`;if(a!==previousAnnouncement)c.querySelector('[data-schedule-announcement]').textContent=a}previousAnnouncement=`${r.state}. ${r.state==='spraying'?'Scheduled to spray now.':`Next scheduled spray: ${r.nextLabel}.`}`}
-if(cards.length){updateSchedule();setInterval(()=>{if(!document.hidden)updateSchedule()},1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateSchedule()})}
+let previousAnnouncement='';
+let scheduleResult;
+let scheduleComputed=0;
+
+function renderCountdown(clock,remaining,state){
+  const days=Math.floor(remaining/86400);
+  const withDays=state==='off-season'||days>0;
+  const units=withDays?['days','hours','minutes','seconds']:['hours','minutes','seconds'];
+  const values=[Math.floor(remaining/3600)%24,Math.floor(remaining%3600/60),remaining%60];
+  if(withDays)values.unshift(days);
+  const format=withDays?'days':'hours';
+  if(clock.dataset.format!==format){
+    clock.innerHTML=units.map(unit=>`<span class="countdown-part" aria-hidden="true"><span data-clock-value></span><small>${unit}</small></span>`).join('');
+    clock.dataset.format=format;
+  }
+  clock.querySelectorAll('[data-clock-value]').forEach((element,index)=>{
+    element.textContent=String(values[index]).padStart(2,'0');
+  });
+  const duration=values.map((value,index)=>`${value} ${units[index]}`).join(' ');
+  clock.setAttribute('aria-label',`${duration} ${state==='spraying'?'remaining in the scheduled cannon firing window':'until the next scheduled cannon firing'}`);
+}
+
+function updateSchedule(){
+  const now=new Date();
+  if(!scheduleResult||now-scheduleComputed>15000||+scheduleResult.targetAt<=+now){
+    scheduleResult=getSchedule(now);
+    scheduleComputed=+now;
+  }
+  const r=scheduleResult;
+  const remaining=r.targetAt?Math.max(0,Math.ceil((r.targetAt-now)/1000)):null;
+  const label=r.state==='spraying'?'Cannon firing window ends in':r.state==='off-season'?'Water cannon returns in':r.state==='closed'?'Water cannon on pause':'Next cannon firing';
+  const nextTime=r.state==='spraying'?'Five-minute scheduled window · Chicago time':r.state==='closed'?`${r.reason} Next: ${r.nextLabel}`:r.state==='off-season'?`Season opens ${r.dateLabel} · ${r.timeLabel}`:`${r.nextLabel} · Chicago time`;
+  const announcement=r.state==='spraying'?'Within a scheduled cannon firing window. This is not live operating status.':r.state==='closed'?`Scheduled closure. ${nextTime}`:`${label}. ${nextTime}. Based on the operator’s schedule.`;
+  for(const card of cards){
+    card.dataset.scheduleState=r.state;
+    card.querySelector('[data-state]').textContent=r.state==='off-season'?'Off-season · back in May':r.state==='closed'?'Scheduled closure':r.state==='spraying'?'Within a scheduled firing window':'The water cannon countdown';
+    card.querySelector('[data-schedule-label]').textContent=label;
+    const clock=card.querySelector('[data-countdown]');
+    if(r.state==='closed'||remaining===null){
+      clock.dataset.format='message';
+      clock.textContent=r.state==='closed'?'Temporarily closed':'Check with MWRD';
+      clock.setAttribute('aria-label',r.reason||'Check the operator’s schedule');
+    }else renderCountdown(clock,remaining,r.state);
+    card.querySelector('[data-next-time]').textContent=nextTime;
+    if(announcement!==previousAnnouncement)card.querySelector('[data-schedule-announcement]').textContent=announcement;
+  }
+  previousAnnouncement=announcement;
+}
+if(cards.length){
+  updateSchedule();
+  setInterval(()=>{if(!document.hidden)updateSchedule()},1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateSchedule()});
+}
 const cannon=document.querySelector('[data-cannon]');if(cannon)import('./cannon.js').then(({initCannon})=>initCannon(cannon)).catch(()=>{cannon.innerHTML='<p class="js-fallback">The simulation could not load. Please refresh to try again. The real fountain’s schedule is above.</p>'});
 const explorer=document.querySelector('[data-hotspots]');
 if(explorer)import('./hotspots.js').then(({initHotspots})=>initHotspots(explorer));
