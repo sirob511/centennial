@@ -21,3 +21,21 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 
 .hero-credit{max-width:1280px;width:calc(100% - 64px);margin:9px auto 0;font-size:10px}.dedication>*{min-width:0}@media(max-width:760px){.schedule-question h2{font-size:20px}.big-year{font-size:70px}.big-year>span{margin-inline:12px;font-size:28px}.hero-credit{width:calc(100% - 16px);font-size:9px}.cannon-scene-label{fill:#d6e4df}}
+
+/* Photo details float beside their numbered marker after JavaScript enhancement. */
+.feature-popover{position:fixed;inset:auto;margin:0;padding:0;width:min(360px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);box-shadow:0 14px 55px #102d3b30,0 2px 8px #102d3b12;z-index:50}
+.feature-popover::backdrop{background:transparent}
+.feature-popover-header{display:flex;justify-content:space-between;align-items:center;gap:14px;position:sticky;top:0;z-index:1;background:var(--paper);padding:3px 6px 3px 18px;border-bottom:1px solid var(--line)}
+.feature-popover-header>span{font-size:9px;font-weight:600;letter-spacing:.12em}
+.feature-close{display:grid;place-items:center;flex-shrink:0;width:40px;height:40px;border:0;border-radius:3px;background:transparent;color:var(--ink);font-size:25px;line-height:1}
+.feature-close:hover{background:#e7e9df}
+.feature-close:focus-visible{outline-offset:-4px}
+.feature-popover article{display:block;padding:0;background:var(--paper)}
+.feature-popover article>div{padding:16px 20px 21px;max-width:none}
+.feature-popover img{height:140px;object-fit:cover}
+.feature-popover figcaption{padding-inline:18px;font-size:9px;line-height:1.5}
+.feature-popover .eyebrow{font-size:9px;margin-bottom:9px}
+.feature-popover h2{font-size:26px;margin-bottom:12px}
+.feature-popover p:not(.eyebrow){font-size:13px;line-height:1.65;margin-bottom:13px}
+.feature-popover .text-link{font-size:11px}
+@media(max-width:760px){.feature-popover img{height:118px}.feature-popover article>div{padding:14px 18px 18px}.feature-popover h2{font-size:25px}.feature-close{width:44px;height:44px}}
