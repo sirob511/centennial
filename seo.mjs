@@ -82,7 +82,7 @@ export function metadata(page) {
 <meta property="og:title" content="${attr(title)}">
 <meta property="og:description" content="${attr(description)}">
 <meta property="og:url" content="${siteOrigin}${path}">
-<meta property="og:image" content="${siteOrigin}/assets/water-cannon-preview-v2.jpg">
+<meta property="og:image" content="${siteOrigin}/assets/water-cannon-preview-v3.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -90,7 +90,7 @@ export function metadata(page) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${attr(title)}">
 <meta name="twitter:description" content="${attr(description)}">
-<meta name="twitter:image" content="${siteOrigin}/assets/water-cannon-preview-v2.jpg">
+<meta name="twitter:image" content="${siteOrigin}/assets/water-cannon-preview-v3.jpg">
 <meta name="twitter:image:alt" content="Centennial Fountain’s arc across the Chicago River, with the headline Chicago’s water cannon and a small Next splash clock icon.">
 <script type="application/ld+json">${JSON.stringify(structuredData(page)).replace(/</g, '\\u003c')}</script>`;
 }

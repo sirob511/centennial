@@ -10,7 +10,7 @@ const [photo, bodyFont, headingFont] = await Promise.all([
   asset('font-1.woff2', 'font/woff2'),
   readFile(new URL('./assets/Fraunces.ttf', import.meta.url)).then(font => `data:font/ttf;base64,${font.toString('base64')}`),
 ]);
-const output = fileURLToPath(new URL('../dist/assets/water-cannon-preview-v2.jpg', import.meta.url));
+const output = fileURLToPath(new URL('../dist/assets/water-cannon-preview-v3.jpg', import.meta.url));
 const browser = await chromium.launch({
   headless: true,
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}),
@@ -28,13 +28,11 @@ try {
     h1 span{color:#ffda58}
     .countdown-cue{position:absolute;right:58px;bottom:74px;display:flex;align-items:center;gap:14px;border:2px solid #ffda5860;border-radius:50px;padding:17px 23px;background:#102d3bce;color:#ffda58;font-size:31px;font-weight:650}
     .countdown-cue svg{width:34px;height:38px;flex-shrink:0}
-    .credit{position:absolute;right:58px;bottom:20px;color:#d4dfe0;font-size:18px}
   </style></head><body>
     <img class="photo" src="${photo}" alt="Centennial Fountain water arc"><div class="shade"></div>
     <div class="brand">Centennial Fountain</div>
     <h1>Chicago’s<br><span>water cannon</span></h1>
     <div class="countdown-cue"><svg viewBox="0 0 36 40" aria-hidden="true"><path d="M13 3h10M18 3v5m10 4 3-3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="24" r="13" fill="none" stroke="currentColor" stroke-width="3"/><path d="M18 16v9l6 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Next splash ↗</div>
-    <div class="credit">Photo: JeremyA · CC BY-SA 2.5</div>
   </body></html>`);
   await page.evaluate(async () => {
     await document.fonts.ready;
@@ -44,7 +42,7 @@ try {
   if (!fits) throw new Error('Social card overflows its 1200×630 canvas');
   await page.screenshot({ path: output, type: 'jpeg', quality: 92 });
   if (process.env.SOCIAL_PREVIEW_PATH) {
-    const image = await asset('water-cannon-preview-v2.jpg', 'image/jpeg');
+    const image = await asset('water-cannon-preview-v3.jpg', 'image/jpeg');
     await page.setViewportSize({ width: 400, height: 210 });
     await page.setContent(`<html><body style="margin:0"><img src="${image}" width="400" height="210"></body></html>`);
     await page.locator('img').evaluate(image => image.decode());
