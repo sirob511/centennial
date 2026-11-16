@@ -130,19 +130,19 @@
 .discovery-pips{display:flex;gap:4px}
 .discovery-pips i{display:block;width:8px;height:8px;border:1px solid #7d9590;border-radius:50%;background:transparent}
 .discovery-pips i[data-discovered=true]{background:var(--river);border-color:var(--river)}
-.motion-toggle{font-size:10px;min-height:30px;padding:4px 0 4px 10px;border:0;background:none;text-decoration:underline;text-underline-offset:3px;color:var(--muted);flex-shrink:0}
+
 .explorer .hotspot-stage{isolation:isolate;border-radius:8px;box-shadow:0 8px 30px #102d3b12}
 .fountain-explorer .hotspot-stage>img{border-radius:8px;aspect-ratio:1600/1020;object-fit:contain}
 .hotspot-photo figcaption{margin-top:6px;font-size:9px}
 .explorer .hotspot{width:56px;height:56px;z-index:2;background:#ffd65c;color:#102d3b;border:3px solid #fffdf1;box-shadow:0 3px 14px #102d3b80,0 0 0 5px #fff6ce55;font:800 19px/1 'Manrope',sans-serif;transition:transform .18s,background .18s,box-shadow .18s}
 .explorer .hotspot::before{content:'';position:absolute;inset:-6px;border:2px solid #ffd65c;border-radius:50%;pointer-events:none;opacity:0}
-.explorer[data-enhanced=true] .hotspot:not([data-discovered=true])::before{animation:marker-beacon 2.4s ease-out infinite}
+.explorer[data-enhanced=true] .hotspot:not([data-discovered=true])::before{animation:marker-beacon 2.4s ease-out 2}
 .explorer .hotspot:nth-of-type(2)::before{animation-delay:-.8s}
 .explorer .hotspot:nth-of-type(3)::before{animation-delay:-1.6s}
 .explorer .hotspot:hover,.explorer .hotspot:focus-visible{transform:translate(-50%,-50%) scale(1.12);background:#ffe89b;box-shadow:0 4px 20px #102d3b80,0 0 0 7px #fff6ce77}
 .explorer .hotspot[aria-pressed=true]{background:#fff3bf;box-shadow:0 0 0 6px #ffd65c88,0 4px 18px #102d3b80}
 .explorer .hotspot[data-discovered=true]::after{content:'✓';position:absolute;top:-7px;right:-7px;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--ink);color:#fff8df;border:2px solid #fff8df;font:700 12px/1 Arial,sans-serif}
-.explorer[data-motion-paused=true] .hotspot::before{animation:none!important}
+
 @keyframes marker-beacon{0%{transform:scale(.94);opacity:.85}80%,100%{transform:scale(1.65);opacity:0}}
 .explorer .feature-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#eceee2}
 .explorer .feature-buttons button{min-width:0;min-height:53px;padding:12px 16px;gap:10px;font-size:12px;border-bottom:0;text-align:left}
@@ -180,7 +180,7 @@
   .discovery-progress strong{font-size:12px}
   .discovery-pips{gap:3px}
   .discovery-pips i{width:6px;height:6px}
-  .motion-toggle{font-size:9px;min-height:30px;padding-left:4px}
+
   .explorer .hotspot{width:44px;height:44px;border-width:2px;font-size:16px;box-shadow:0 3px 12px #102d3b80,0 0 0 4px #fff6ce66}
   .explorer .hotspot[data-discovered=true]::after{width:18px;height:18px;font-size:10px;top:-5px;right:-5px}
   .explorer .feature-buttons{margin-top:10px}
@@ -196,7 +196,7 @@
   .interactive-page .visit-schedule{margin-top:30px}
   .interactive-page .about-explain{padding-top:38px}
 }
-@media(prefers-reduced-motion:reduce){.explorer .hotspot::before{animation:none!important}.motion-toggle{display:none}}
+@media(prefers-reduced-motion:reduce){.explorer .hotspot::before{animation:none!important}}
 
 /* The river reversal is a visual switchboard, with the history beneath it. */
 .reversal{max-width:min(1280px,calc((100svh - 300px)*1.85185185))}

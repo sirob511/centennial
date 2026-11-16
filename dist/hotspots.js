@@ -13,7 +13,6 @@ export function initHotspots(explorer) {
   const discoveryPips = [...explorer.querySelectorAll('[data-discovery-pip]')];
   const discoveryDescription = discoveryLabel?.textContent.trim() || 'details discovered';
   const discoveryComplete = explorer.dataset.discoveryComplete || 'All details discovered!';
-  const motionButton = explorer.querySelector('[data-marker-motion]');
   const nativePopover = typeof popup.showPopover === 'function';
   let trigger = null;
   let anchor = null;
@@ -68,17 +67,6 @@ export function initHotspots(explorer) {
         ? discoveryComplete
         : `${discovered.size} of ${featureIds.size} ${discoveryDescription}.`;
     }
-  }
-
-  if (motionButton) {
-    explorer.dataset.motionPaused = 'false';
-    motionButton.setAttribute('aria-pressed', 'false');
-    motionButton.addEventListener('click', () => {
-      const paused = explorer.dataset.motionPaused !== 'true';
-      explorer.dataset.motionPaused = String(paused);
-      motionButton.setAttribute('aria-pressed', String(paused));
-      motionButton.textContent = paused ? 'Resume pulses' : 'Pause pulses';
-    });
   }
 
   function syncButtons() {
