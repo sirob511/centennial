@@ -46,15 +46,20 @@ export function initCannon(root){
     <span class="sr-only" data-announcement role="status" aria-live="polite" aria-atomic="true"></span></div>`;
   const q=selector=>root.querySelector(selector),all=selector=>[...root.querySelectorAll(selector)];
   const el={shell:q('.cannon-shell'),scene:q('.cannon-scene-art'),fire:q('[data-fire]'),advance:q('[data-advance]'),announce:q('[data-announcement]'),status:q('[data-status]'),motion:q('[data-motion]'),score:q('[data-score]'),scoreLabel:q('.cannon-score'),result:q('[data-result-panel]'),resultTitle:q('[data-result-title]')};
+  const game={time:0,round:1,score:0,shot:null,feedbackUntil:0,feedbackBoat:null,boats:[{id:1,center:1250,hit:false,miss:false}]};
+  function attachBoat(boat){
+    boat.node=el.boatTemplate.cloneNode(true);boat.node.dataset.boatId=String(boat.id);
+    boat.wet=boat.node.querySelector('[data-boat-wet]');el.boats.append(boat.node);
+  }
   function readScene(){
-    for(const key of ['boat','water','splash','ring','ripples'])el[key]=q(`[data-${key}]`);
-    el.wet=q('[data-boat-wet]');
+    el.boatTemplate=q('[data-boat]');el.boats=document.createElementNS('http://www.w3.org/2000/svg','g');el.boats.dataset.boats='';
+    el.boatTemplate.replaceWith(el.boats);game.boats.forEach(attachBoat);
+    for(const key of ['water','splash','ring','ripples'])el[key]=q(`[data-${key}]`);
     for(const [key,selector] of [['lamps','lamp'],['glows','glow'],['streams','stream'],['drops','drop']])el[key]=all(`[data-${selector}]`);
   }
   readScene();
   const media=matchMedia('(prefers-reduced-motion: reduce)');
   let reduced=media.matches,manualPause=false,frame=0,destroyed=false,visible=false,lastTick=performance.now();
-  const game={time:0,center:1250,round:1,score:0,hit:false,miss:false,shot:null,feedbackUntil:0};
   const still=()=>reduced||manualPause;
   const announce=text=>el.announce.textContent=text;
   const shotAge=()=>game.shot===null?Infinity:game.time-game.shot;
@@ -92,29 +97,42 @@ export function initCannon(root){
     }
     return contact;
   }
-  function showResult(hit){
+  function showResult(hit,boat){
+    game.feedbackBoat=boat;
     el.shell.dataset.result=hit?'hit':'miss';el.resultTitle.textContent=hit?'Splash!':'Missed!';el.result.hidden=false;
     game.feedbackUntil=game.time+(hit?1800:1000);
   }
-  function nextBoat(){
-    game.center=1250;game.round+=1;game.hit=false;game.miss=false;game.shot=null;game.feedbackUntil=0;
-    el.shell.dataset.round=String(game.round);el.shell.dataset.hit='false';el.result.hidden=true;delete el.shell.dataset.result;
+  function nextBoat(center){
+    const boat={id:++game.round,center,hit:false,miss:false};
+    game.boats.push(boat);attachBoat(boat);
   }
   function render(allowScoring=visible&&!document.hidden){
-    const paused=still(),scale=compact?.84:1;
-    const boatX=(compact?game.center*.6:game.center)-127*scale,boatY=(compact?439:337)+(paused?0:Math.sin(game.time*.0018)*.7);
-    el.boat.setAttribute('transform',`translate(${boatX.toFixed(2)} ${boatY.toFixed(2)}) scale(${scale})`);
-    el.shell.dataset.boatCenter=game.center.toFixed(1);
-    const strength=power(),contact=boatContact(boatX,boatY,scale),touching=contact&&strength>=contact.t;
-    if(touching&&!game.hit&&allowScoring){
-      game.hit=true;game.score+=1;el.shell.dataset.hit='true';el.score.textContent=String(game.score);el.scoreLabel.setAttribute('aria-label',`Boats splashed: ${game.score}`);showResult(true);announce(`Splash! ${game.score} ${game.score===1?'boat':'boats'} splashed.`);
+    const paused=still(),scale=compact?.84:1,strength=power();
+    let contact=null,contactBoat=null;
+    for(const boat of game.boats){
+      boat.x=(compact?boat.center*.6:boat.center)-127*scale;
+      boat.y=(compact?439:337)+(paused?0:Math.sin(game.time*.0018+boat.id)*.7);
+      boat.node.setAttribute('transform',`translate(${boat.x.toFixed(2)} ${boat.y.toFixed(2)}) scale(${scale})`);
+      boat.node.dataset.center=boat.center.toFixed(1);
+      const candidate=boatContact(boat.x,boat.y,scale);
+      if(candidate&&(!contact||candidate.t<contact.t)){contact=candidate;contactBoat=boat}
     }
-    if(!game.hit&&!game.miss&&game.center<780&&allowScoring){game.miss=true;showResult(false);announce('Missed. Another boat is on its way.')}
-    el.wet.setAttribute('opacity',game.hit?'1':'0');
+    const touching=contact&&strength>=contact.t;
+    if(touching&&!contactBoat.hit&&allowScoring){
+      contactBoat.hit=true;game.score+=1;el.score.textContent=String(game.score);el.scoreLabel.setAttribute('aria-label',`Boats splashed: ${game.score}`);showResult(true,contactBoat);announce(`Splash! ${game.score} ${game.score===1?'boat':'boats'} splashed.`);
+    }
+    for(const boat of game.boats){
+      if(!boat.hit&&!boat.miss&&boat.center<780&&allowScoring){boat.miss=true;showResult(false,boat);announce('Missed. Another boat is on its way.')}
+      boat.wet.setAttribute('opacity',boat.hit?'1':'0');boat.node.dataset.hit=String(boat.hit);
+    }
+    const newest=game.boats.at(-1);
+    el.shell.dataset.round=String(newest.id);el.shell.dataset.hit=String(newest.hit);
+    el.shell.dataset.boatCenter=newest.center.toFixed(1);el.shell.dataset.boatCount=String(game.boats.length);
     if(game.time>game.feedbackUntil)el.result.hidden=true;
-    if(!el.result.hidden){
-      el.result.style.left=`${clamp((boatX+127*scale)/(compact?720:1200),.15,.85)*100}%`;
-      el.result.style.top=`${(boatY-16)/(compact?650:540)*100}%`;
+    if(!el.result.hidden&&game.feedbackBoat){
+      const boat=game.feedbackBoat;
+      el.result.style.left=`${clamp((boat.x+127*scale)/(compact?720:1200),.15,.85)*100}%`;
+      el.result.style.top=`${(boat.y-16)/(compact?650:540)*100}%`;
     }
     const age=shotAge(),phase=age<1400?'firing':age<1700?'reloading':'ready';
     el.shell.dataset.phase=phase;el.fire.setAttribute('aria-disabled',String(phase!=='ready'));el.fire.style.setProperty('--charge',phase==='ready'?'0':String(clamp(age/1700)));
@@ -143,8 +161,13 @@ export function initCannon(root){
     el.ripples.setAttribute('transform',`translate(${paused?0:Math.sin(game.time*.0003)*2} ${compact?60:0})`);
   }
   function advance(milliseconds,manual=false){
-    game.time+=milliseconds;game.center-=manual?125:milliseconds*.17;
-    if(game.center<-160)nextBoat();
+    game.time+=milliseconds;
+    const distance=manual?125:milliseconds*.22;
+    for(const boat of game.boats)boat.center-=distance;
+    // Keep arrivals 2.5 seconds apart, independent of boats leaving the scene.
+    const newest=game.boats.at(-1);
+    if(newest.center<=700)nextBoat(newest.center+550);
+    game.boats=game.boats.filter(boat=>{if(boat.center>=-240)return true;boat.node.remove();return false});
     render(true);
   }
   function tick(now){

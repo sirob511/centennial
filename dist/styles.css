@@ -187,7 +187,7 @@
   .explorer .feature-buttons button{padding:10px 9px;min-height:56px;gap:6px;font-size:11px}
   .explorer .feature-buttons button span:last-child{display:none}
   .explorer .feature-buttons button[data-discovered=true] span:last-child{display:block}
-  .visit-map-stage{aspect-ratio:600/450}
+  .visit-map-stage{aspect-ratio:770/500}
   .visit-map-desktop{display:none}
   .visit-map-mobile{display:block}
   .map-hotspot{left:var(--mobile-pin-x);top:var(--mobile-pin-y)}
