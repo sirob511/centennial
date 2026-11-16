@@ -157,6 +157,13 @@
 .visit-map-stage .visit-map{width:100%;height:100%;min-width:0;border-radius:8px}
 .visit-map-mobile{display:none}
 .map-hotspot{left:var(--pin-x);top:var(--pin-y)}
+.map-explorer .feature-buttons button{align-items:center;min-height:82px}
+.map-explorer .viewpoint-label{display:grid;gap:5px;line-height:1.4}
+.map-explorer .viewpoint-label strong{font-size:13px;font-weight:650}
+.map-explorer .viewpoint-label small{font-size:12px;color:var(--muted);font-weight:400}
+.feature-panel .viewpoint-location{display:grid;gap:3px;padding:10px 12px;background:#e4eadd;border-radius:5px;color:var(--ink)}
+.feature-panel .viewpoint-location strong{font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+
 .map-caption{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px;font-size:10px;color:var(--muted)}
 .map-caption .text-link{font-size:11px}
 .interactive-page .visit-schedule{margin-top:42px}
@@ -191,6 +198,12 @@
   .visit-map-desktop{display:none}
   .visit-map-mobile{display:block}
   .map-hotspot{left:var(--mobile-pin-x);top:var(--mobile-pin-y)}
+  .map-explorer .feature-buttons{grid-template-columns:1fr}
+  .map-explorer .feature-buttons button{min-height:64px;border-right:0;border-bottom:1px solid var(--line);padding:10px 13px;gap:12px}
+  .map-explorer .feature-buttons button:last-child{border-bottom:0}
+  .map-explorer .feature-buttons button>span:last-child{display:block}
+  .map-explorer .viewpoint-label{gap:2px}
+
   .map-caption{font-size:9px;gap:12px;align-items:center;margin-top:8px}
   .map-caption .text-link{font-size:10px;gap:5px}
   .interactive-page .visit-schedule{margin-top:30px}
