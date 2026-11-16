@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
+    "build:social": "node scripts/render-social-image.mjs",
     "test": "node --test tests/*.test.mjs",
     "dev": "python3 -m http.server 4173 --directory dist",
     "test:browser": "node tests/browser.mjs"

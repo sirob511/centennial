@@ -82,16 +82,16 @@ export function metadata(page) {
 <meta property="og:title" content="${attr(title)}">
 <meta property="og:description" content="${attr(description)}">
 <meta property="og:url" content="${siteOrigin}${path}">
-<meta property="og:image" content="${siteOrigin}/assets/share.jpg">
+<meta property="og:image" content="${siteOrigin}/assets/water-cannon-countdown.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Centennial Fountain’s water arc over the Chicago River">
+<meta property="og:image:alt" content="Centennial Fountain’s water arc behind a boxed water cannon countdown preview. See the current countdown at centennialfountain.org.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${attr(title)}">
 <meta name="twitter:description" content="${attr(description)}">
-<meta name="twitter:image" content="${siteOrigin}/assets/share.jpg">
-<meta name="twitter:image:alt" content="Centennial Fountain’s water arc over the Chicago River">
+<meta name="twitter:image" content="${siteOrigin}/assets/water-cannon-countdown.jpg">
+<meta name="twitter:image:alt" content="Centennial Fountain’s water arc behind a boxed water cannon countdown preview. See the current countdown at centennialfountain.org.">
 <script type="application/ld+json">${JSON.stringify(structuredData(page)).replace(/</g, '\\u003c')}</script>`;
 }
 
