@@ -8,9 +8,9 @@ const asset = async (name, type) => `data:${type};base64,${(await readFile(new U
 const [photo, bodyFont, headingFont] = await Promise.all([
   asset('cascade.jpg', 'image/jpeg'),
   asset('font-1.woff2', 'font/woff2'),
-  asset('font-7.woff2', 'font/woff2'),
+  readFile(new URL('./assets/Fraunces.ttf', import.meta.url)).then(font => `data:font/ttf;base64,${font.toString('base64')}`),
 ]);
-const output = fileURLToPath(new URL('../dist/assets/water-cannon-preview.jpg', import.meta.url));
+const output = fileURLToPath(new URL('../dist/assets/water-cannon-preview-v2.jpg', import.meta.url));
 const browser = await chromium.launch({
   headless: true,
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}),
@@ -19,12 +19,12 @@ try {
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
   await page.setContent(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Centennial Fountain sharing card</title><style>
     @font-face{font-family:DM;src:url('${bodyFont}');font-weight:400 700}
-    @font-face{font-family:Manrope;src:url('${headingFont}');font-weight:400 800}
+    @font-face{font-family:Fraunces;src:url('${headingFont}') format('truetype');font-weight:100 900}
     *{box-sizing:border-box}body{margin:0;width:1200px;height:630px;overflow:hidden;background:#102d3b;color:#fffaf0;font-family:DM,Arial,sans-serif}
     .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 48%}
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,#071e2a80,transparent 28%,transparent 45%,#071e2a95 68%,#071e2af5)}
-    .brand{position:absolute;left:58px;top:34px;font:700 36px/1.2 Manrope,sans-serif;letter-spacing:-.035em;text-shadow:0 2px 12px #102d3b99}
-    h1{position:absolute;left:58px;bottom:61px;font:750 86px/1.02 Manrope,sans-serif;letter-spacing:-.055em;margin:0;text-shadow:0 2px 20px #071e2a55}
+    .brand{position:absolute;left:58px;top:34px;padding:16px 25px 18px;border-radius:3px;background:#fff4d9;color:#102d3b;font:750 52px/1.1 Fraunces,serif;font-variation-settings:'SOFT' 75,'WONK' 1,'opsz' 72;letter-spacing:-.035em;box-shadow:0 4px 18px #071e2a30}
+    h1{position:absolute;left:58px;bottom:61px;font:750 88px/1.02 Fraunces,serif;font-variation-settings:'SOFT' 75,'WONK' 1,'opsz' 96;letter-spacing:-.035em;margin:0;text-shadow:0 2px 20px #071e2a55}
     h1 span{color:#ffda58}
     .countdown-cue{position:absolute;right:58px;bottom:74px;display:flex;align-items:center;gap:14px;border:2px solid #ffda5860;border-radius:50px;padding:17px 23px;background:#102d3bce;color:#ffda58;font-size:31px;font-weight:650}
     .countdown-cue svg{width:34px;height:38px;flex-shrink:0}
@@ -44,7 +44,7 @@ try {
   if (!fits) throw new Error('Social card overflows its 1200×630 canvas');
   await page.screenshot({ path: output, type: 'jpeg', quality: 92 });
   if (process.env.SOCIAL_PREVIEW_PATH) {
-    const image = await asset('water-cannon-preview.jpg', 'image/jpeg');
+    const image = await asset('water-cannon-preview-v2.jpg', 'image/jpeg');
     await page.setViewportSize({ width: 400, height: 210 });
     await page.setContent(`<html><body style="margin:0"><img src="${image}" width="400" height="210"></body></html>`);
     await page.locator('img').evaluate(image => image.decode());

@@ -68,7 +68,7 @@ test('every public page has unique metadata and one matching public canonical', 
 
 test('social previews have absolute images, dimensions and accessible descriptions', () => {
   for (const { path, html } of pages) {
-    assert.equal(metaValue(html, 'og:image'), `${siteOrigin}/assets/water-cannon-preview.jpg`, path);
+    assert.equal(metaValue(html, 'og:image'), `${siteOrigin}/assets/water-cannon-preview-v2.jpg`, path);
     assert.equal(metaValue(html, 'twitter:image'), metaValue(html, 'og:image'));
     assert.equal(metaValue(html, 'og:image:type'), 'image/jpeg');
     assert.equal(metaValue(html, 'og:image:width'), '1200');
