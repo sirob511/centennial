@@ -39,8 +39,10 @@ The maps and cannon are original schematic vector illustrations. The game lives 
 
 ## Hosting
 
+Vercel builds from the repository root using `vercel.json`: `npm run build` generates the site and `dist` is the output directory. The five pages use static directory routes, so no catch-all rewrite is needed.
+
 `.openai/hosting.json` declares the private Sites project and static output. Canonical URLs and share metadata use the Sites origin. CentennialFountain.com is the site identity; connecting that custom domain requires its owner’s DNS configuration and has not been performed.
 
 ## Interaction-first layout
 
-The home page leads with the real fountain, its firing countdown and visitor viewpoints. Visual cards link to Visit, Explore and River Reversal; a secondary Play link leads to the separate game page. The photo explorers and river switch lead their pages. Secondary history, access notes and source material use native disclosures; incoming `#sources`, `#directions` and `#static-maps` links open their corresponding disclosure. Keep required photo credits beside images when editing these layouts.
+The home page leads with a large fountain photograph, a short water-cannon introduction and one Visit action. A compact firing countdown sits directly beneath the photo; full hours are on `/visit/#hours`. Visual cards link to Visit, Explore and River Reversal; a secondary Play link leads to the separate game page. The photo explorers and river switch lead their pages. Secondary history, access notes and source material use native disclosures; incoming `#sources`, `#directions` and `#static-maps` links open their corresponding disclosure. Keep required photo credits beside images when editing these layouts.
