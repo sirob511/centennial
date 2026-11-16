@@ -1,3 +1,5 @@
+# Public search and AI search crawlers may access the guide.
 User-agent: *
 Allow: /
-Sitemap: https://centennial-fountain-guide.amusingdelta5.chatgpt.site/sitemap.xml
+
+Sitemap: https://centennialfountain.org/sitemap.xml

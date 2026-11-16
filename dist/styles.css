@@ -293,6 +293,14 @@
 .play-page .play-frame{max-width:clamp(600px,calc((100svh - 240px) * 2.2222),1280px)}
 .home-play-link{display:flex;justify-content:flex-end;padding-bottom:32px;margin-top:-22px}
 .home-play-link .text-link{font-size:12px;color:var(--muted)}
+.visitor-overview{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding-block:35px;border-top:1px solid var(--line)}
+.visitor-overview h2{font-size:28px;margin-bottom:16px}
+.visitor-overview h3{font-size:22px;margin-bottom:16px}
+.visitor-overview p{font-size:14px;color:var(--muted);max-width:62ch;margin-bottom:12px}
+.visitor-overview .text-link{font-size:12px;margin-block:4px 12px}
+.visitor-overview .small{font-size:11px}
+.game-description{font-size:13px;color:var(--muted);padding-top:24px}
+@media(max-width:760px){.visitor-overview{grid-template-columns:1fr;gap:22px;padding-block:28px}.visitor-overview h2{font-size:25px}.visitor-overview h3{font-size:20px}.visitor-overview p{font-size:13px}}
 .adventure-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding-block:42px 54px}
 .adventure-card{min-width:0}
 .adventure-card>a{position:relative;display:block;overflow:hidden;aspect-ratio:1.18;border-radius:12px;background:var(--ink);color:#fff9ec;text-decoration:none;isolation:isolate}

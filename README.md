@@ -1,12 +1,12 @@
 # Centennial Fountain
 
-Five static pages for an independent Chicago visitor guide. Source is in `build.mjs`; shared styles and browser modules are in `dist/`. No framework or runtime dependencies are required.
+Five static pages for an independent Chicago visitor guide. Source is in `build.mjs` and `seo.mjs`; shared styles and browser modules are in `dist/`. No framework or runtime dependencies are required.
 
 ## Local use
 
-- `npm run build` regenerates the five HTML pages, sitemap and robots file.
+- `npm run build` regenerates the five HTML pages, 404 page, sitemap, robots file and optional AI reading index.
 - `npm run dev` serves `dist/` on port 4173.
-- `npm test` runs 12 schedule tests.
+- `npm test` runs schedule and SEO regression tests after building.
 
 ## Schedule maintenance
 
@@ -41,7 +41,17 @@ The maps and cannon are original schematic vector illustrations. The game lives 
 
 Vercel builds from the repository root using `vercel.json`: `npm run build` generates the site and `dist` is the output directory. The five pages use static directory routes, so no catch-all rewrite is needed.
 
-`.openai/hosting.json` declares the private Sites project and static output. Canonical URLs and share metadata use the Sites origin. CentennialFountain.com is the site identity; connecting that custom domain requires its owner’s DNS configuration and has not been performed.
+The public production domain is **https://centennialfountain.org**. The verified `www` domain redirects to the apex in Vercel. `.openai/hosting.json` declares a separate private Sites copy. Publishing to Sites does not push GitHub or deploy the public Vercel site; those are separate operations. Do not change the Sites audience to make the production domain discoverable.
+
+## Search and AI discovery
+
+`seo.mjs` generates unique titles/descriptions, canonical URLs, Open Graph/Twitter metadata, and JSON-LD for the independent website, its pages, breadcrumbs and the fountain attraction. The guide is not the fountain operator. Schema matches visible content; cannon firing windows are not encoded as the park's opening hours. No ratings, reviews, affiliations or live operational status are invented.
+
+All canonical URLs, schema IDs, social images, sitemap entries and `llms.txt` links use `https://centennialfountain.org`. To intentionally move the public site, build with `SITE_URL=https://your-public-domain.example npm run build` and configure that domain in hosting. Keep a single canonical origin across public mirrors. `trailingSlash: true` in Vercel matches the static directory URLs and avoids canonical redirects. Missing routes return `404.html` with `noindex`; they are excluded from the sitemap.
+
+Location, schedule, fountain history and river-reversal explanations are readable in the initial HTML with JavaScript disabled. The generated schedule summary uses `SCHEDULE`, and existing `lastChecked` dates change only after actual source verification. The optional `/llms.txt` provides a short reading index and source links for tools that use it; it is not a requirement or a ranking signal for Google. The wildcard allow rule in `/robots.txt` permits search crawlers, including OAI-SearchBot; no new training-bot policy has been introduced.
+
+After deploying the public site, verify public HTTP 200 responses without authentication or `noindex` headers, a real 404 for missing pages, and reachable `/robots.txt` and `/sitemap.xml`. Submit `https://centennialfountain.org/sitemap.xml` through the owner's Google Search Console and Bing Webmaster Tools accounts when available. These ownership-dependent submissions are separate from code deployment; indexing and AI citations are not guaranteed. Official guidance: [Google AI search](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide), [structured data](https://developers.google.com/search/docs/appearance/structured-data/sd-policies), [OpenAI crawlers](https://developers.openai.com/api/docs/bots).
 
 ## Interaction-first layout
 
