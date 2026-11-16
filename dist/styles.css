@@ -273,13 +273,13 @@
 .hero-shade{background:linear-gradient(180deg,#0d273b70,transparent 65%),linear-gradient(0deg,#0d273b85,transparent 30%)}
 .hero-bottom{align-items:center}
 .hero-button{font-size:13px;font-weight:600}
-.hero-play{padding:10px 12px 10px 20px;gap:24px;border-radius:50px;background:#ffd65c;color:var(--ink);box-shadow:0 4px 20px #091e3530;transition:transform .2s,background .2s}
-.hero-play span{border:0;background:#102d3b;color:#fff9e9;width:36px;height:36px}
-.hero-play:hover{background:#ffe897;transform:translateY(-3px)}
-.hero-play:hover span{background:var(--ink)}
-.play-section{padding-block:38px 0;scroll-margin-top:16px}
-.play-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.play-heading h2{font-size:28px}
+.hero-primary{padding:10px 12px 10px 20px;gap:24px;border-radius:50px;background:#ffd65c;color:var(--ink);box-shadow:0 4px 20px #091e3530;transition:transform .2s,background .2s}
+.hero-primary span{border:0;background:#102d3b;color:#fff9e9;width:36px;height:36px}
+.hero-primary:hover{background:#ffe897;transform:translateY(-3px)}
+.hero-primary:hover span{background:var(--ink)}
+.play-page .play-frame{max-width:clamp(600px,calc((100svh - 240px) * 2.2222),1280px)}
+.home-play-link{display:flex;justify-content:flex-end;padding-bottom:32px;margin-top:-22px}
+.home-play-link .text-link{font-size:12px;color:var(--muted)}
 .adventure-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding-block:42px 54px}
 .adventure-card{min-width:0}
 .adventure-card>a{position:relative;display:block;overflow:hidden;aspect-ratio:1.18;border-radius:12px;background:var(--ink);color:#fff9ec;text-decoration:none;isolation:isolate}
@@ -357,10 +357,10 @@
   .hero-bottom{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap}
   .hero-button{font-size:11px;gap:9px;flex-direction:row;align-items:center}
   .hero-button>span{width:30px;height:30px;font-size:17px}
-  .hero-play{padding:7px 8px 7px 14px;gap:10px}
-  .play-section{width:calc(100% - 24px);padding-top:28px}
-  .play-heading h2{font-size:24px}
-  .play-heading{margin-bottom:12px;padding-inline:4px}
+  .hero-primary{padding:7px 8px 7px 14px;gap:10px}
+  .play-page .play-frame{width:calc(100% - 24px);max-width:1280px}
+  .play-page .explore-intro{padding-inline:4px}
+  .home-play-link{margin-top:-8px;padding-bottom:26px}
   .adventure-grid{width:calc(100% - 24px);grid-template-columns:1fr;gap:22px;padding-block:28px 36px}
   .adventure-card>a{aspect-ratio:1.65}
   .adventure-card-title h2{font-size:27px}
@@ -387,8 +387,8 @@
   .home-wrap>.schedule-featured{padding:18px 16px}
   .hero-copy{padding:22px 16px}
   .hero-bottom{gap:12px}
-  .hero-button:not(.hero-play){font-size:10px}
-  .hero-button:not(.hero-play)>span{display:none}
+  .hero-button:not(.hero-primary){font-size:10px}
+  .hero-button:not(.hero-primary)>span{display:none}
   .schedule-hours span{display:block}
   .schedule-hours span+span::before{content:none}
 }

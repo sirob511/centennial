@@ -1,10 +1,10 @@
 # Centennial Fountain
 
-Four static pages for an independent Chicago visitor guide. Source is in `build.mjs`; shared styles and browser modules are in `dist/`. No framework or runtime dependencies are required.
+Five static pages for an independent Chicago visitor guide. Source is in `build.mjs`; shared styles and browser modules are in `dist/`. No framework or runtime dependencies are required.
 
 ## Local use
 
-- `npm run build` regenerates the four HTML pages, sitemap and robots file.
+- `npm run build` regenerates the five HTML pages, sitemap and robots file.
 - `npm run dev` serves `dist/` on port 4173.
 - `npm test` runs 12 schedule tests.
 
@@ -31,7 +31,7 @@ Explore and Visit share anchored detail popovers in `dist/hotspots.js`. Opening 
 
 Primary content sources are linked in the site. The operator schedule takes precedence over conflicting older listings. The district was founded in 1889; the reversal occurred in 1900; the fountain dedication was in 1989. Viewpoint access is documented using park, Riverwalk and bridge sources, and original photographs; it is not a live access guarantee.
 
-The maps and cannon are original schematic vector illustrations. The game uses one Fire control and automatically repeating boats. Water must hit the boat to score, with one point available per boat. A hit creates a splash at the point of contact. The game pauses outside the viewport; reduced motion uses a stationary boat with a manual movement control.
+The maps and cannon are original schematic vector illustrations. The game lives at `/play/` and loads its browser module only on that page; old `/#cannon` links redirect there. It uses one Fire control and automatically repeating boats. Water must hit the boat to score, with one point available per boat. A hit creates a splash at the point of contact. The game pauses outside the viewport; reduced motion uses a stationary boat with a manual movement control.
 
 ## Browser verification
 
@@ -43,4 +43,4 @@ The maps and cannon are original schematic vector illustrations. The game uses o
 
 ## Interaction-first layout
 
-The photo explorers and river switch lead their pages. Secondary history, access notes and source material use native disclosures; incoming `#sources`, `#directions` and `#static-maps` links open their corresponding disclosure. The home page links to the three experiences with visual cards. Keep required photo credits beside images when editing these layouts.
+The home page leads with the real fountain, its firing countdown and visitor viewpoints. Visual cards link to Visit, Explore and River Reversal; a secondary Play link leads to the separate game page. The photo explorers and river switch lead their pages. Secondary history, access notes and source material use native disclosures; incoming `#sources`, `#directions` and `#static-maps` links open their corresponding disclosure. Keep required photo credits beside images when editing these layouts.

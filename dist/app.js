@@ -60,6 +60,10 @@ if(explorers.length)import('./hotspots.js').then(({initHotspots})=>explorers.for
 initReversal();
 
 async function revealLinkedDetails(){
+  if((location.pathname==='/'||location.pathname==='/index.html')&&location.hash==='#cannon'){
+    location.replace('/play/');
+    return;
+  }
   const target=document.getElementById(location.hash.slice(1));
   if(target?.tagName!=='DETAILS')return;
   target.open=true;

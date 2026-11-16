@@ -7,7 +7,7 @@ export async function checkCannon(page, {reduced = false} = {}) {
     await page.clock.install({time:new Date('2026-11-15T12:00:00-06:00')});
     clockContexts.add(page.context());
   }
-  await page.goto('http://127.0.0.1:4173/', {waitUntil:'networkidle'});
+  await page.goto('http://127.0.0.1:4173/play/', {waitUntil:'networkidle'});
   const root = page.locator('[data-cannon]');
   await root.locator('[data-fire]').waitFor();
   await root.evaluate(el => el.scrollIntoView({block:'center',behavior:'instant'}));
