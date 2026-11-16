@@ -37,7 +37,9 @@ function updateSchedule(){
   for(const card of cards){
     card.dataset.scheduleState=r.state;
     card.querySelector('[data-state]').textContent=r.state==='off-season'?'Off-season · back in May':r.state==='closed'?'Scheduled closure':r.state==='spraying'?'Within a scheduled firing window':'The water cannon countdown';
-    card.querySelector('[data-schedule-label]').textContent=label;
+    card.querySelector('[data-schedule-label]').textContent=card.classList.contains('schedule-compact')
+      ? r.state==='spraying'?'Firing window ends in:':r.state==='off-season'?'Water cannon returns in:':r.state==='closed'?'Water cannon on pause':'Water cannon fires in:'
+      : label;
     const clock=card.querySelector('[data-countdown]');
     if(r.state==='closed'||remaining===null){
       clock.dataset.format='message';

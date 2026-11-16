@@ -92,7 +92,7 @@ async function checkReversal(testPage) {
 }
 
 await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});await page.locator('img').evaluateAll(async imgs=>{imgs.forEach(i=>i.loading='eager');await Promise.all(imgs.map(i=>i.decode()))});await page.screenshot({path:'/tmp/centennial-home-desktop.png',fullPage:true});
-assert.match(await page.locator('[data-schedule-label]').textContent(),/Next cannon firing|Water cannon returns in|Cannon firing window ends in/);
+assert.match(await page.locator('[data-schedule-label]').textContent(),/Water cannon fires in:|Water cannon returns in:|Firing window ends in:/);
 assert.equal(await page.locator('[data-cannon]').count(),0,'home focuses on the attraction');
 assert.equal(await page.evaluate(()=>performance.getEntriesByType('resource').some(entry=>new URL(entry.name).pathname==='/cannon.js')),false,'home does not load the game');
 await page.locator('header nav').getByRole('link',{name:'Play',exact:true}).click();
