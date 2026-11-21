@@ -177,6 +177,8 @@ test('internal links and media resolve to generated routes or bundled assets', a
       if (!value || value.startsWith('#')) continue;
       const url = new URL(value, `${siteOrigin}${path}`);
       if (url.origin !== siteOrigin) continue;
+      // Vercel serves the analytics script at deployment time.
+      if (url.pathname === '/_vercel/insights/script.js') continue;
       let filename = resolve(dist, `.${decodeURIComponent(url.pathname)}`);
       if (url.pathname.endsWith('/')) filename = resolve(filename, 'index.html');
       const info = await stat(filename).catch(() => null);
